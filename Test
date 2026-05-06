@@ -2,12 +2,12 @@ export default {
   async fetch(request) {
     const url = new URL(request.url);
     
-    // သင့် VPS IP နဲ့ Port ထည့်ပါ
+    // IP PORT
     url.protocol = 'http';
     url.hostname = '43.252.21.107';
     url.port = '8443';
     
-    // သင့် X-UI က path - အတိအကျ ဒီလိုထားပါ
+    // X-UI Path
     url.pathname = '/မောင်သုည';
     
     // WebSocket Upgrade အတွက်
