@@ -1,0 +1,26 @@
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    
+    // သင့် VPS IP နဲ့ Port ထည့်ပါ
+    url.protocol = 'http';
+    url.hostname = '43.252.21.107';
+    url.port = '8443';
+    
+    // သင့် X-UI က path - အတိအကျ ဒီလိုထားပါ
+    url.pathname = '/မောင်သုည';
+    
+    // WebSocket Upgrade အတွက်
+    const newHeaders = new Headers(request.headers);
+    newHeaders.set('Host', '43.252.21.107');
+    
+    const modifiedRequest = new Request(url, {
+      method: request.method,
+      headers: newHeaders,
+      body: request.body,
+      duplex: 'half'
+    });
+    
+    return fetch(modifiedRequest);
+  }
+}
