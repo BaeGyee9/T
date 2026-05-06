@@ -1,0 +1,32 @@
+export default {
+  async fetch(request) {
+    const url = new URL(request.url);
+    
+    // HTTPS
+    url.protocol = 'https';
+    url.hostname = '43.252.21.107';
+    url.port = '2053';
+    
+    // Path
+    url.pathname = '/မောင်သုည';
+    
+    // Headers
+    const newHeaders = new Headers(request.headers);
+    newHeaders.set('Host', '43.252.21.107');
+    
+    const modifiedRequest = new Request(url, {
+      method: request.method,
+      headers: newHeaders,
+      body: request.body,
+      duplex: 'half'
+    });
+    
+    // SSL လက်ခံဖို့ (Cloudflare အတွက်)
+    return fetch(modifiedRequest, {
+      cf: {
+        cacheTtl: 0,
+        cacheEverything: false
+      }
+    });
+  }
+}
